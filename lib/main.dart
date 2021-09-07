@@ -30,13 +30,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final PageController _pageController = PageController(initialPage: 2);
   int _currentPage = 2;
-  double _pageOffset = 2;
+  double? _pageOffset = 2;
 
   @override
   void initState() {
     super.initState();
     _pageController.addListener(() {
-      int next = _pageController.page.round();
+      int next = _pageController.page!.round();
 
       if (_currentPage != next) {
         setState(() {
@@ -105,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class SingleCard extends StatelessWidget {
-  final CardModel cardModel;
+  final CardModel? cardModel;
 
   SingleCard({
-    Key key,
+    Key? key,
     this.cardModel,
   }) : super(key: key);
 
@@ -118,7 +118,7 @@ class SingleCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.all(30),
       decoration: BoxDecoration(
-          color: cardModel.cardColor,
+          color: cardModel!.cardColor,
           borderRadius: BorderRadius.circular(16.0)),
       duration: Duration(milliseconds: 150),
       child: Column(
@@ -130,7 +130,7 @@ class SingleCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
-                  cardModel.tagLine,
+                  cardModel!.tagLine,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
@@ -140,7 +140,7 @@ class SingleCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(cardModel.title,
+                child: Text(cardModel!.title,
                     style: TextStyle(color: Colors.white)),
               ),
             ],
@@ -166,19 +166,19 @@ class SingleCard extends StatelessWidget {
 }
 
 class SingleCardImage extends StatelessWidget {
-  final CardModel cardModel;
-  final double offset;
-  final int index, activeIndex;
+  final CardModel? cardModel;
+  final double? offset;
+  final int? index, activeIndex;
 
   SingleCardImage(
-      {Key key, this.cardModel, this.offset, this.index, this.activeIndex})
+      {Key? key, this.cardModel, this.offset, this.index, this.activeIndex})
       : super(key: key);
   final viewPort = 0.5;
   final maxHeight = 0.4;
 
   @override
   Widget build(BuildContext context) {
-    final realOffset = (offset - index);
+    final realOffset = (offset! - index!);
     final dy = -realOffset * MediaQuery.of(context).size.width;
 
     return Center(
@@ -190,7 +190,7 @@ class SingleCardImage extends StatelessWidget {
         child: Transform.scale(
           scale: max(1 - realOffset.abs(), maxHeight),
           child: Image.asset(
-            'assets/${cardModel.imagePath}',
+            'assets/${cardModel!.imagePath}',
             height: _maxImageHeight,
           ),
         ),
